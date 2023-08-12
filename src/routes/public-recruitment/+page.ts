@@ -1,6 +1,7 @@
 import type { PageLoad } from './$types';
 
 import { browser } from '$app/environment';
+import { base } from '$app/paths';
 import { parse } from 'csv-parse/browser/esm/sync';
 
 type Character = {
@@ -57,7 +58,7 @@ type CharacterRaw = {
 
 export const load = (async ({ fetch }) => browser
   ? ({
-    data: parse(await (await fetch('/open-jobs.csv')).text(), { columns: true })
+    data: parse(await (await fetch(`${base}/public-recruitment.csv`)).text(), { columns: true })
       .map((character: CharacterRaw): Character => ({
         '名前': character['名前'],
         'レアリティ': +character['レアリティ'],

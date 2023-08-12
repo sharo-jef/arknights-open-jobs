@@ -3,12 +3,11 @@
   import { base } from '$app/paths';
 
   const routes = [
-    { path: `${base}/`, name: 'Top', id: 'nav-0' },
+    { path: `${base ? `${base}/` : '/'}`, name: 'Top', id: 'nav-0' },
     { path: `${base}/public-recruitment`, name: '公開求人ツール', id: 'nav-1' },
   ];
 
-  let selected = browser && routes.find(route => route.path === window.location.pathname)?.id;
-
+  let selected = browser && routes.find(route => window.location.pathname.match(new RegExp(route.path === `${base}/` ? `^${route.path}?$` : `^${route.path}/?$`)))?.id;
   const changeComponent = (event: MouseEvent) => {
     selected = (event.target as HTMLButtonElement).id;
   };
@@ -23,9 +22,9 @@
 
     <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        {#each routes as route, i}
+        {#each routes as route}
         <li class="nav-item">
-          <a class="nav-link {selected === route.id ? 'active' : ''}" aria-current="page" href="{route.path}" on:click={changeComponent} id={route.id}>{route.name}</a>
+          <a class="nav-link {selected !== void 0 && selected === route.id ? 'active' : ''}" aria-current="page" href="{route.path}" on:click={changeComponent} id={route.id}>{route.name}</a>
         </li>
         {/each}
         <!-- <li class="nav-item">

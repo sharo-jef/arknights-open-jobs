@@ -9,8 +9,3 @@
     <slot />
   </div>
 </main>
-
-<style lang="sass">
-  :global(body)
-    padding-top: 56px
-</style>
