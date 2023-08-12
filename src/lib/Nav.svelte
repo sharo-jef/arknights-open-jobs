@@ -1,9 +1,10 @@
 <script lang="ts">
   import { browser } from '$app/environment';
+  import { base } from '$app/paths';
 
   const routes = [
-    { path: '/', name: 'Top', id: 'nav-0' },
-    { path: '/public-recruitment', name: '公開求人ツール', id: 'nav-1' },
+    { path: `${base}/`, name: 'Top', id: 'nav-0' },
+    { path: `${base}/public-recruitment`, name: '公開求人ツール', id: 'nav-1' },
   ];
 
   let selected = browser && routes.find(route => route.path === window.location.pathname)?.id;
@@ -15,7 +16,7 @@
 
 <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" aria-label="Main navigation">
   <div class="container-fluid">
-    <a class="navbar-brand" href="/">Arknights Tools</a>
+    <a class="navbar-brand" href="{base}/">Arknights Tools</a>
     <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
