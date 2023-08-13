@@ -4,58 +4,6 @@ import { browser } from '$app/environment';
 import { base } from '$app/paths';
 import { parse } from 'csv-parse/browser/esm/sync';
 
-type Character = {
-  '名前': string;
-  'レアリティ': number;
-  'タイプ': string;
-  '上級エリート': boolean;
-  '初期': boolean;
-  '近距離': boolean;
-  '遠距離': boolean;
-  '火力': boolean;
-  '生存': boolean;
-  '防御': boolean;
-  '治療': boolean;
-  '支援': boolean;
-  '範囲攻撃': boolean;
-  '減速': boolean;
-  '牽制': boolean;
-  '弱化': boolean;
-  'COST回復': boolean;
-  '強制移動': boolean;
-  '爆発力': boolean;
-  '召喚': boolean;
-  '高速再配置': boolean;
-  'ロボット': boolean;
-  '追加日': string;
-};
-
-type CharacterRaw = {
-  '名前': string;
-  'レアリティ': string;
-  'タイプ': string;
-  '上級エリート': string;
-  '初期': string;
-  '近距離': string;
-  '遠距離': string;
-  '火力': string;
-  '生存': string;
-  '防御': string;
-  '治療': string;
-  '支援': string;
-  '範囲攻撃': string;
-  '減速': string;
-  '牽制': string;
-  '弱化': string;
-  'COST回復': string;
-  '強制移動': string;
-  '爆発力': string;
-  '召喚': string;
-  '高速再配置': string;
-  'ロボット': string;
-  '追加日': string;
-};
-
 export const load = (async ({ fetch }) => browser
   ? ({
     data: parse(await (await fetch(`${base}/public-recruitment.csv`)).text(), { columns: true })
@@ -82,7 +30,7 @@ export const load = (async ({ fetch }) => browser
         '召喚': character['召喚'] === 'o',
         '高速再配置': character['高速再配置'] === 'o',
         'ロボット': character['ロボット'] === 'o',
-        '追加日': character['追加日'],
+        '追加日': new Date(`${character['追加日'].replace(/\//g, '-')}T00:00:00+0900`),
       })),
   })
   : ({ data: [] })) satisfies PageLoad;
